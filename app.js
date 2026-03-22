@@ -53,6 +53,10 @@ const state = {
   scenes: [
     {
       id: generateSceneId(),
+const state = {
+  scenes: [
+    {
+      id: crypto.randomUUID(),
       title: 'Welcome to your video',
       subtitle: 'Use the controls on the left to build scene-based animated content.',
       duration: 4,
@@ -99,6 +103,14 @@ function getFormData() {
     duration: getSafeDuration(fields.duration.value),
     background: fields.background.value,
     animation: getSafeAnimationPreset(fields.animation.value),
+function getFormData() {
+  return {
+    id: crypto.randomUUID(),
+    title: fields.title.value.trim(),
+    subtitle: fields.subtitle.value.trim(),
+    duration: Number(fields.duration.value),
+    background: fields.background.value,
+    animation: fields.animation.value,
   };
 }
 
@@ -201,12 +213,20 @@ function renderPreview(scene, { replay = false } = {}) {
   if (replay) {
     restartAnimation(scene);
   }
+function renderPreview(scene) {
+  previewName.textContent = scene.title;
+  stageTitle.textContent = scene.title;
+  stageSubtitle.textContent = scene.subtitle || 'No subtitle for this scene yet.';
+  stageDuration.textContent = `${scene.duration}s`;
+  stage.style.background = `linear-gradient(135deg, ${scene.background}, #11152d)`;
+  stage.className = `preview-stage ${scene.animation}`;
 }
 
 function renderTimeline() {
   sceneList.innerHTML = '';
 
   const totalSeconds = state.scenes.reduce((sum, scene) => sum + getSafeDuration(scene.duration), 0);
+  const totalSeconds = state.scenes.reduce((sum, scene) => sum + scene.duration, 0);
   timelineSummary.textContent = `${state.scenes.length} scene${state.scenes.length === 1 ? '' : 's'} · ${totalSeconds} seconds`;
 
   state.scenes.forEach((scene, index) => {
@@ -224,6 +244,7 @@ function renderTimeline() {
       state.selectedSceneId = scene.id;
       setFormData(scene);
       render({ replay: false });
+      render();
     });
 
     sceneList.appendChild(fragment);
@@ -273,6 +294,16 @@ previewCard.addEventListener('animationcancel', (event) => {
     elapsedTime: event.elapsedTime,
   });
 });
+
+function render() {
+  const selectedScene = state.scenes.find((scene) => scene.id === state.selectedSceneId) ?? state.scenes[0];
+  if (!selectedScene) {
+    return;
+  }
+
+  renderPreview(selectedScene);
+  renderTimeline();
+}
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -351,6 +382,44 @@ playAllButton.addEventListener('click', async () => {
       logToConsole('info', 'Playback was interrupted by a newer play request.', { playbackToken });
       return;
     }
+  render();
+});
+
+updateButton.addEventListener('click', () => {
+  const index = state.scenes.findIndex((scene) => scene.id === state.selectedSceneId);
+  if (index === -1) {
+    return;
+  }
+
+  const current = state.scenes[index];
+  const updatedScene = {
+    ...current,
+    title: fields.title.value.trim(),
+    subtitle: fields.subtitle.value.trim(),
+    duration: Number(fields.duration.value),
+    background: fields.background.value,
+    animation: fields.animation.value,
+  };
+
+  if (!updatedScene.title) {
+    fields.title.focus();
+    return;
+  }
+
+  state.scenes[index] = updatedScene;
+  render();
+});
+
+playAllButton.addEventListener('click', async () => {
+  clearTimeout(state.playbackTimer);
+
+  for (const scene of state.scenes) {
+    state.selectedSceneId = scene.id;
+    render();
+    // eslint-disable-next-line no-await-in-loop
+    await new Promise((resolve) => {
+      state.playbackTimer = setTimeout(resolve, scene.duration * 1000);
+    });
   }
 });
 
@@ -358,6 +427,7 @@ exportButton.addEventListener('click', () => {
   const project = {
     exportedAt: new Date().toISOString(),
     totalDuration: state.scenes.reduce((sum, scene) => sum + getSafeDuration(scene.duration), 0),
+    totalDuration: state.scenes.reduce((sum, scene) => sum + scene.duration, 0),
     scenes: state.scenes,
   };
 
@@ -372,3 +442,4 @@ exportButton.addEventListener('click', () => {
 
 setFormData(state.scenes[0]);
 render({ replay: true });
+render();
