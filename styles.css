@@ -153,6 +153,8 @@ p {
 }
 
 .preview-stage {
+  --scene-duration: 4s;
+  --animation-duration: 0.9s;
   min-height: 420px;
   border-radius: 24px;
   display: grid;
@@ -171,6 +173,7 @@ p {
   background: rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
+  transform-origin: center;
 }
 
 .preview-card h3 {
@@ -237,6 +240,110 @@ p {
   color: var(--muted);
 }
 
+.preview-card.is-animating,
+.preview-card.is-animating h3,
+.preview-card.is-animating p,
+.preview-card.is-animating .duration-badge {
+  animation-duration: var(--animation-duration);
+  animation-fill-mode: both;
+  animation-timing-function: ease;
+}
+
+.preview-stage[data-animation='fade-up'] .preview-card.is-animating {
+  animation-name: fadeUpCard;
+}
+
+.preview-stage[data-animation='fade-up'] .preview-card.is-animating h3 {
+  animation-name: fadeUpText;
+}
+
+.preview-stage[data-animation='fade-up'] .preview-card.is-animating p,
+.preview-stage[data-animation='fade-up'] .preview-card.is-animating .duration-badge {
+  animation-name: fadeUpText;
+  animation-delay: calc(var(--animation-duration) * 0.12);
+}
+
+.preview-stage[data-animation='slide-left'] .preview-card.is-animating {
+  animation-name: slideLeftCard;
+}
+
+.preview-stage[data-animation='slide-left'] .preview-card.is-animating h3 {
+  animation-name: slideLeftText;
+}
+
+.preview-stage[data-animation='slide-left'] .preview-card.is-animating p,
+.preview-stage[data-animation='slide-left'] .preview-card.is-animating .duration-badge {
+  animation-name: slideLeftText;
+  animation-delay: calc(var(--animation-duration) * 0.1);
+}
+
+.preview-stage[data-animation='zoom-in'] .preview-card.is-animating {
+  animation-name: zoomInCard;
+}
+
+.preview-stage[data-animation='zoom-in'] .preview-card.is-animating h3 {
+  animation-name: zoomInText;
+}
+
+.preview-stage[data-animation='zoom-in'] .preview-card.is-animating p,
+.preview-stage[data-animation='zoom-in'] .preview-card.is-animating .duration-badge {
+  animation-name: zoomInText;
+  animation-delay: calc(var(--animation-duration) * 0.12);
+}
+
+.preview-stage[data-animation='pop'] .preview-card.is-animating {
+  animation-name: popCard;
+}
+
+.preview-stage[data-animation='pop'] .preview-card.is-animating h3 {
+  animation-name: popText;
+}
+
+.preview-stage[data-animation='pop'] .preview-card.is-animating p,
+.preview-stage[data-animation='pop'] .preview-card.is-animating .duration-badge {
+  animation-name: popText;
+  animation-delay: calc(var(--animation-duration) * 0.14);
+}
+
+@keyframes fadeUpCard {
+  from { opacity: 0; transform: translateY(48px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes fadeUpText {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideLeftCard {
+  from { opacity: 0; transform: translateX(110px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideLeftText {
+  from { opacity: 0; transform: translateX(42px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes zoomInCard {
+  from { opacity: 0; transform: scale(0.72); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes zoomInText {
+  from { opacity: 0; transform: scale(0.86); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes popCard {
+  0% { opacity: 0; transform: scale(0.55) rotate(-3deg); }
+  65% { opacity: 1; transform: scale(1.06) rotate(1deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+@keyframes popText {
+  0% { opacity: 0; transform: scale(0.7); }
+  75% { opacity: 1; transform: scale(1.08); }
 .preview-stage.fade-up .preview-card {
   animation: fadeUp 0.8s ease;
 }
