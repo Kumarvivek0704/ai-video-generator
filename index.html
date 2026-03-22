@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animated Video Studio</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="panel controls-panel">
+        <div>
+          <p class="eyebrow">MVP</p>
+          <h1>Animated Video Studio</h1>
+          <p class="lede">
+            Build short animated scenes, preview motion, and export a project file.
+          </p>
+        </div>
+
+        <form id="scene-form" class="scene-form">
+          <label>
+            Scene title
+            <input id="title" name="title" type="text" maxlength="60" required />
+          </label>
+
+          <label>
+            Scene subtitle
+            <textarea id="subtitle" name="subtitle" rows="3" maxlength="180"></textarea>
+          </label>
+
+          <div class="inline-fields">
+            <label>
+              Duration (seconds)
+              <input id="duration" name="duration" type="number" min="1" max="20" value="4" required />
+            </label>
+
+            <label>
+              Background
+              <input id="background" name="background" type="color" value="#6c63ff" />
+            </label>
+          </div>
+
+          <label>
+            Animation preset
+            <select id="animation" name="animation">
+              <option value="fade-up">Fade Up</option>
+              <option value="slide-left">Slide Left</option>
+              <option value="zoom-in">Zoom In</option>
+              <option value="pop">Pop</option>
+            </select>
+          </label>
+
+          <div class="button-row">
+            <button type="submit">Add scene</button>
+            <button type="button" id="update-scene" class="secondary">Update selected</button>
+          </div>
+        </form>
+      </aside>
+
+      <main class="workspace">
+        <section class="panel preview-panel">
+          <div class="preview-toolbar">
+            <div>
+              <p class="eyebrow">Preview</p>
+              <h2 id="preview-name">Scene preview</h2>
+            </div>
+            <div class="button-row compact">
+              <button id="play-all" type="button">Play timeline</button>
+              <button id="export-json" type="button" class="secondary">Export JSON</button>
+            </div>
+          </div>
+
+          <div class="preview-stage-wrap">
+            <div id="preview-stage" class="preview-stage fade-up">
+              <div class="preview-card">
+                <h3 id="stage-title">Your first scene</h3>
+                <p id="stage-subtitle">Add a scene to see an animated preview.</p>
+                <span id="stage-duration" class="duration-badge">4s</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel timeline-panel">
+          <div class="timeline-header">
+            <div>
+              <p class="eyebrow">Timeline</p>
+              <h2>Scenes</h2>
+            </div>
+            <p id="timeline-summary">0 scenes · 0 seconds</p>
+          </div>
+          <ul id="scene-list" class="scene-list"></ul>
+        </section>
+      </main>
+    </div>
+
+    <template id="scene-item-template">
+      <li class="scene-item">
+        <button type="button" class="scene-select">
+          <span class="scene-order"></span>
+          <span class="scene-copy">
+            <strong class="scene-title"></strong>
+            <small class="scene-meta"></small>
+          </span>
+        </button>
+      </li>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
