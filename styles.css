@@ -1,0 +1,288 @@
+:root {
+  color-scheme: dark;
+  --bg: #0f1226;
+  --panel: rgba(19, 24, 47, 0.92);
+  --panel-border: rgba(255, 255, 255, 0.08);
+  --text: #f5f7ff;
+  --muted: #abb6d1;
+  --accent: #8b7dff;
+  --accent-strong: #6c63ff;
+  --shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Inter, system-ui, sans-serif;
+  background:
+    radial-gradient(circle at top, rgba(108, 99, 255, 0.25), transparent 30%),
+    linear-gradient(180deg, #11152d 0%, #090b17 100%);
+  color: var(--text);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.8rem 1.15rem;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: white;
+  font-weight: 700;
+}
+
+button.secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+label {
+  display: grid;
+  gap: 0.45rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  border-radius: 14px;
+  padding: 0.9rem 1rem;
+}
+
+textarea {
+  resize: vertical;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: minmax(320px, 380px) 1fr;
+  gap: 1.25rem;
+  padding: 1.25rem;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+}
+
+.controls-panel {
+  padding: 1.5rem;
+  display: grid;
+  gap: 1.5rem;
+  align-self: start;
+}
+
+.workspace {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.preview-panel,
+.timeline-panel {
+  padding: 1.5rem;
+}
+
+.preview-toolbar,
+.timeline-header,
+.button-row,
+.inline-fields {
+  display: flex;
+  gap: 0.9rem;
+}
+
+.preview-toolbar,
+.timeline-header {
+  justify-content: space-between;
+  align-items: start;
+}
+
+.button-row.compact {
+  gap: 0.65rem;
+}
+
+.inline-fields > * {
+  flex: 1;
+}
+
+.scene-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: #8ea0ff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.lede {
+  color: var(--muted);
+}
+
+.preview-stage-wrap {
+  margin-top: 1rem;
+}
+
+.preview-stage {
+  min-height: 420px;
+  border-radius: 24px;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  overflow: hidden;
+  position: relative;
+  transition: background 220ms ease;
+}
+
+.preview-card {
+  width: min(520px, 100%);
+  text-align: center;
+  padding: 2rem;
+  border-radius: 24px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
+}
+
+.preview-card h3 {
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  margin-bottom: 1rem;
+}
+
+.preview-card p {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 1.08rem;
+  line-height: 1.5;
+}
+
+.duration-badge {
+  display: inline-block;
+  margin-top: 1.2rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  font-size: 0.9rem;
+}
+
+.scene-list {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.scene-select {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 18px;
+  padding: 1rem;
+  text-align: left;
+}
+
+.scene-select.active {
+  outline: 2px solid rgba(139, 125, 255, 0.75);
+}
+
+.scene-order {
+  width: 2.3rem;
+  height: 2.3rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.scene-copy {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.scene-copy small,
+#timeline-summary {
+  color: var(--muted);
+}
+
+.preview-stage.fade-up .preview-card {
+  animation: fadeUp 0.8s ease;
+}
+
+.preview-stage.slide-left .preview-card {
+  animation: slideLeft 0.8s ease;
+}
+
+.preview-stage.zoom-in .preview-card {
+  animation: zoomIn 0.8s ease;
+}
+
+.preview-stage.pop .preview-card {
+  animation: popIn 0.65s ease;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(34px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideLeft {
+  from { opacity: 0; transform: translateX(60px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes popIn {
+  0% { opacity: 0; transform: scale(0.5); }
+  70% { opacity: 1; transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+
+@media (max-width: 960px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .preview-toolbar,
+  .timeline-header,
+  .button-row,
+  .inline-fields {
+    flex-direction: column;
+  }
+}
