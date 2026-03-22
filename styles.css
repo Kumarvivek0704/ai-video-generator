@@ -154,6 +154,7 @@ p {
 
 .preview-stage {
   --scene-duration: 4s;
+  --animation-duration: 0.9s;
   min-height: 420px;
   border-radius: 24px;
   display: grid;
@@ -243,7 +244,7 @@ p {
 .preview-card.is-animating h3,
 .preview-card.is-animating p,
 .preview-card.is-animating .duration-badge {
-  animation-duration: var(--scene-duration);
+  animation-duration: var(--animation-duration);
   animation-fill-mode: both;
   animation-timing-function: ease;
 }
@@ -259,7 +260,7 @@ p {
 .preview-stage[data-animation='fade-up'] .preview-card.is-animating p,
 .preview-stage[data-animation='fade-up'] .preview-card.is-animating .duration-badge {
   animation-name: fadeUpText;
-  animation-delay: calc(var(--scene-duration) * 0.08);
+  animation-delay: calc(var(--animation-duration) * 0.12);
 }
 
 .preview-stage[data-animation='slide-left'] .preview-card.is-animating {
@@ -273,7 +274,7 @@ p {
 .preview-stage[data-animation='slide-left'] .preview-card.is-animating p,
 .preview-stage[data-animation='slide-left'] .preview-card.is-animating .duration-badge {
   animation-name: slideLeftText;
-  animation-delay: calc(var(--scene-duration) * 0.06);
+  animation-delay: calc(var(--animation-duration) * 0.1);
 }
 
 .preview-stage[data-animation='zoom-in'] .preview-card.is-animating {
@@ -287,7 +288,7 @@ p {
 .preview-stage[data-animation='zoom-in'] .preview-card.is-animating p,
 .preview-stage[data-animation='zoom-in'] .preview-card.is-animating .duration-badge {
   animation-name: zoomInText;
-  animation-delay: calc(var(--scene-duration) * 0.08);
+  animation-delay: calc(var(--animation-duration) * 0.12);
 }
 
 .preview-stage[data-animation='pop'] .preview-card.is-animating {
@@ -301,7 +302,7 @@ p {
 .preview-stage[data-animation='pop'] .preview-card.is-animating p,
 .preview-stage[data-animation='pop'] .preview-card.is-animating .duration-badge {
   animation-name: popText;
-  animation-delay: calc(var(--scene-duration) * 0.1);
+  animation-delay: calc(var(--animation-duration) * 0.14);
 }
 
 @keyframes fadeUpCard {

@@ -142,6 +142,21 @@ function verifyAnimationPlayback(scene, playbackToken) {
   });
 }
 
+function getAnimationDuration(duration) {
+  const safeDuration = getSafeDuration(duration);
+  return Math.min(Math.max(safeDuration * 0.35, 0.6), 1.2);
+}
+
+function resetAnimationState(element) {
+  if (!element) {
+    return;
+  }
+
+  element.style.animation = 'none';
+  void element.offsetWidth;
+  element.style.animation = '';
+}
+
 function restartAnimation(scene) {
   if (!previewCard || !stage) {
     debugFailure('Preview DOM elements are missing; cannot restart animation.');
@@ -154,7 +169,13 @@ function restartAnimation(scene) {
   previewCard.classList.remove('is-animating');
   stage.dataset.animation = safeAnimation;
   stage.style.setProperty('--scene-duration', `${safeDuration}s`);
+  stage.style.setProperty('--animation-duration', `${getAnimationDuration(safeDuration)}s`);
   state.lastAnimationStartAt = 0;
+
+  resetAnimationState(previewCard);
+  resetAnimationState(stageTitle);
+  resetAnimationState(stageSubtitle);
+  resetAnimationState(stageDuration);
 
   void previewCard.offsetWidth;
 
@@ -173,6 +194,7 @@ function renderPreview(scene, { replay = false } = {}) {
   stage.style.background = `linear-gradient(135deg, ${scene.background}, #11152d)`;
   stage.dataset.animation = safeAnimation;
   stage.style.setProperty('--scene-duration', `${safeDuration}s`);
+  stage.style.setProperty('--animation-duration', `${getAnimationDuration(safeDuration)}s`);
   scene.duration = safeDuration;
   scene.animation = safeAnimation;
 
