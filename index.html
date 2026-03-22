@@ -66,9 +66,12 @@
             </div>
             <div class="button-row compact">
               <button id="play-all" type="button">Play timeline</button>
+              <button id="export-video" type="button">Export Video</button>
               <button id="export-json" type="button" class="secondary">Export JSON</button>
             </div>
           </div>
+
+          <p id="export-status" class="status-text">Ready to preview or export a WebM video.</p>
 
           <div class="preview-stage-wrap">
             <div id="preview-stage" class="preview-stage fade-up">
@@ -79,6 +82,8 @@
               </div>
             </div>
           </div>
+
+          <canvas id="render-canvas" class="render-canvas" width="1280" height="720" aria-hidden="true"></canvas>
         </section>
 
         <section class="panel timeline-panel">

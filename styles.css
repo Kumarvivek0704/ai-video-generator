@@ -152,6 +152,16 @@ p {
   margin-top: 1rem;
 }
 
+
+.status-text {
+  margin: 0.75rem 0 0;
+  color: var(--muted);
+}
+
+.render-canvas {
+  display: none;
+}
+
 .preview-stage {
   --scene-duration: 4s;
   --animation-duration: 0.9s;
